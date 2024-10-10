@@ -5,18 +5,12 @@ import (
 	"testing"
 
 	"github.com/bytedance/sonic"
-	"github.com/dicedb/dice/internal/constants"
+	"github.com/dicedb/dice/internal/server/utils"
 	"gotest.tools/v3/assert"
 )
 
 func IsJSONResponse(s string) bool {
-	return (s != constants.EmptyStr && (sonic.ValidString(s)))
-}
-
-func AssertJSONEqual(t *testing.T, expected, actual string) {
-	if !compareJSONs(t, expected, actual) {
-		t.Errorf("JSON not equal.\nExpected: %s\nActual: %s", expected, actual)
-	}
+	return s != utils.EmptyStr && (sonic.ValidString(s))
 }
 
 func AssertJSONEqualList(t *testing.T, expected []string, actual string) {
@@ -33,7 +27,6 @@ func AssertJSONEqualList(t *testing.T, expected []string, actual string) {
 }
 
 func compareJSONs(t *testing.T, expected, actual string) bool {
-	t.Log("Comparing JSONs expected:", expected, "actual:", actual)
 	var expectedJSON, actualJSON interface{}
 
 	err := sonic.UnmarshalString(expected, &expectedJSON)
